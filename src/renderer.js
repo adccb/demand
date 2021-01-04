@@ -1,11 +1,21 @@
 import items from './handlers/index.js'
+import { log, logN, write } from './components/buffer.js'
+
+// this modifies String.prototype
+// because i'm an absolute fool
+import colors from 'colors'
+
+colors.setTheme({
+  selected: ['green', 'bold'],
+})
 
 const prefixes = {
   npm: '📦',
   custom: '🔧',
+  git: '🎛️ ',
 }
 
-const renderOption = ({ keypress, title, idx, source }, activeIndex) => {
+const renderOption = activeIndex => ({ keypress, title, idx, source }) => {
   const str = `[${keypress}] → ${title}`
   return `${prefixes[source] || '🤷‍♀️'} ${
     idx === activeIndex ? str.selected : str
@@ -13,18 +23,34 @@ const renderOption = ({ keypress, title, idx, source }, activeIndex) => {
 }
 
 const render = ({ index }) => {
-  const option = items.find(({ idx }) => idx === index)
-  const displayOptions = `${items
-    .map(item => renderOption(item, index))
-    .join('\n')}`
+  write()
+  const displayOptions = items.map(renderOption(index)).join('\n')
+  const { cmd } = items.find(({ idx }) => idx === index)
 
-  console.clear()
-  console.log(
-    `[${String(index).yellow}] choose your fighter`,
-    `w/s to move, enter to select`.grey,
+  log(
+    `[${index}]`.grey,
+    'choose your fighter'.bold,
+    '(',
+    'q/Esc'.blue,
+    'to quit'.grey,
+    ';;'.grey,
+    'w/s'.blue,
+    'to move'.grey,
+    ';;'.grey,
+    'enter'.blue,
+    'to select'.grey,
+    ';;'.grey,
+    'key commands in'.grey,
+    '[brackets]'.blue,
+    'can be used any time'.grey,
+    ')',
+    '\n',
   )
-  if (displayOptions.length) console.log(displayOptions)
-  process.stdout.write(`\nwill run: ${option.cmd.blue} `)
+
+  if (displayOptions.length) log(displayOptions, '\n')
+
+  logN(`$ ${cmd}`.grey)
+  write()
 }
 
 export default render

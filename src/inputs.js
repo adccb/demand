@@ -1,21 +1,52 @@
 import items from './handlers/index.js'
+import render from './renderer.js'
+import { getContext, setContext } from './components/context.js'
 
-const isCommand = char => items.some(({ keypress }) => keypress === char)
-const isMovement = char => ['w', 's'].includes(char.toLowerCase())
-const isKeybind = char => ['\r'].includes(char)
+const quit = ['\u0003', 'q', '\u001b']
+const movement = ['w', 's']
+const up = ['w']
+const down = ['s']
+const keybind = ['\r']
+const command = items.map(({ keypress }) => keypress)
 
-const handleInput = (input, { index, onCommand, onMovement }) => {
-  if (isKeybind(input)) {
+const is = coll => char => coll.includes(char.toLowerCase())
+const isQuit = is(quit)
+const isMovement = is(movement)
+const isKeybind = is(keybind)
+const isCommand = is(command)
+export const isUp = is(up)
+export const isDown = is(down)
+
+const handleInput = async (
+  input,
+  context,
+  { onCommand, onMovement, onKeybind, beforeQuit = () => Promise.resolve() },
+) => {
+  const { index } = context
+
+  let newContext = context
+  if (isQuit(input)) {
+    await beforeQuit()
+    process.exit()
+  } else if (isKeybind(input)) {
+    console.log()
     switch (input) {
       case '\r': {
-        onCommand(index, { byIndex: true })
+        newContext = await onCommand(index, context, { byIndex: true })
+      }
+      default: {
+        newContext = onKeybind(input)
       }
     }
   } else if (isCommand(input)) {
-    onCommand(input)
+    process.stdout.write(` ${input.bold.green}\n`)
+    newContext = await onCommand(input, context)
   } else if (isMovement(input)) {
-    onMovement(input)
+    newContext = onMovement(input, context)
   }
+
+  setContext(newContext)
+  render(newContext)
 }
 
 export default handleInput
