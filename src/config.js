@@ -1,6 +1,8 @@
-import rawNpm from './npm.js'
-import rawCustom from './custom.js'
-import rawGit from './git.js'
+import { $CONFIG_FILE } from './reapers/onInit.js'
+
+const {
+  default: { npm: rawNpm, custom: rawCustom, git: rawGit, python: rawPython },
+} = await import($CONFIG_FILE)
 
 const normalize = ([keypress, value]) => ({ keypress, ...value })
 
@@ -17,10 +19,12 @@ const attachSource = (source, collection) =>
 export const custom = attachSource('custom', rawCustom)
 export const npm = attachSource('npm', rawNpm)
 export const git = attachSource('git', rawGit)
+export const python = attachSource('python', rawPython)
 
 export const maxIndex = index - 1
 export default [
   ...Object.entries(custom),
   ...Object.entries(npm),
   ...Object.entries(git),
+  ...Object.entries(python),
 ].map(normalize)

@@ -1,7 +1,8 @@
 import { getUserInput, execute } from '../util.js'
 import * as headers from '../components/headers.js'
 
-export const onCommand = async ({ cmd }, context) => {
+export const onCommand = async ({ cmd } = {}, context) => {
+  if (!cmd) return context
   console.log(`executing ${cmd.yellow}...\n`)
 
   const { stdout, stderr, code } = await execute(cmd)

@@ -1,5 +1,3 @@
-import { joinSpace } from '../util.js'
-
 export const stdout = stdout =>
   stdout
     ? 'stdout:'.green + '\n' + stdout

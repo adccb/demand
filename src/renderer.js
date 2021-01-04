@@ -1,4 +1,4 @@
-import items from './handlers/index.js'
+import items from './config.js'
 import { log, logN, write } from './components/buffer.js'
 
 // this modifies String.prototype
@@ -13,6 +13,8 @@ const prefixes = {
   npm: '📦',
   custom: '🔧',
   git: '🎛️ ',
+  python: '🐍',
+  unknown: '🤷‍♀️',
 }
 
 const renderOption = activeIndex => ({ keypress, title, idx, source }) => {

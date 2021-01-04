@@ -1,6 +1,6 @@
-import items from './handlers/index.js'
+import items from './config.js'
 import render from './renderer.js'
-import { getContext, setContext } from './components/context.js'
+import { setContext } from './components/context.js'
 
 const quit = ['\u0003', 'q', '\u001b']
 const movement = ['w', 's']
@@ -35,7 +35,7 @@ const handleInput = async (
         newContext = await onCommand(index, context, { byIndex: true })
       }
       default: {
-        newContext = onKeybind(input)
+        newContext = onKeybind(input, context)
       }
     }
   } else if (isCommand(input)) {

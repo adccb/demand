@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "colors": "^1.4.0",
+    "gar": "^1.0.4",
     "lodash.curry": "^4.1.1"
   }
 }

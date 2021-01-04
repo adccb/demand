@@ -23,5 +23,3 @@ export const execute = cmd =>
 
 export const join = (delim, ...words) =>
   words ? words => join(delim, words) : words.join(delim)
-
-export const joinSpace = join(' ')
