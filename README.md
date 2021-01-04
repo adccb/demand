@@ -30,6 +30,6 @@ if you used the alias technique, just run `$ demand` and see the normal demand w
 any valid shell works for `cmd`s, with the understanding that i'm running everything through `child_process.exec` so any gotchas there will be gotchas here too.
 
 
-![action shot](https://github.com/mxtetrachord/demand/blob/master/before.jpg?raw=true)
+![action shot](https://github.com/mxtetrachord/demand/blob/master/before.png?raw=true)
 
-![action shot](https://github.com/mxtetrachord/demand/blob/master/after.jpg?raw=true)
+![action shot](https://github.com/mxtetrachord/demand/blob/master/after.png?raw=true)
