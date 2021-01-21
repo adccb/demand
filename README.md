@@ -5,9 +5,17 @@ demand is a configurable one-key task runner for various shell commands and lang
 ## installation
 
 ```sh
-$ git clone https://github.com/mxtetrachord/demand && cd demand
-$ alias demand='node ~/path/to/here/src/index.js'
+$ git clone https://github.com/mxtetrachord/demand \
+    && cd demand \
+    && npm install \
+    && npm run build
+
+# set up a shell alias
+$ alias demand='node ~/path/to/here/build/index.js'
+
+# create the config file at ~/.config/demand/items.js
 $ demand --init
+
 $ cat ~/.config/demand/items.js
 module.exports = {
   custom: {},
@@ -21,14 +29,16 @@ module.exports = {
 }
 
 $ echo "yay"
+
+# launch the app
+$ demand
 ```
 
 ## usage
 
-if you used the alias technique, just run `$ demand` and see the normal demand window; there are instructions printed at the top, and you'll see your configured items from your `.config/demand/items.js`. they'll be assigned a key command based on their keys in the hash they're attached to (so e.g. `config.npm.g` will represent the command that runs on `g`).
+if you used the alias technique, just run `$ demand` and see the normal demand window; there are instructions printed at the top, and you'll see your configured items from your `~/.config/demand/items.js`. they'll be assigned a key command based on their keys in the hash they're attached to (so e.g. `config.npm.g` will represent the command that runs on `g`).
 
 any valid shell works for `cmd`s, with the understanding that i'm running everything through `child_process.exec` so any gotchas there will be gotchas here too.
-
 
 ![action shot](https://github.com/mxtetrachord/demand/blob/master/before.png?raw=true)
 
