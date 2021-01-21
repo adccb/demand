@@ -1,4 +1,4 @@
-import items from './config.js'
+import getItems from './config.js'
 import { log, logN, write } from './components/buffer.js'
 
 // this modifies String.prototype
@@ -24,7 +24,8 @@ const renderOption = activeIndex => ({ keypress, title, idx, source }) => {
   }`
 }
 
-const render = ({ index }) => {
+const render = async ({ index }) => {
+  const { items } = await getItems()
   write()
   const displayOptions = items.map(renderOption(index)).join('\n')
   const { cmd } = items.find(({ idx }) => idx === index)
