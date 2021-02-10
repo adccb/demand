@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import gar from 'gar'
 import render from './renderer.js'
 import handleInput from './inputs.js'
